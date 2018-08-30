@@ -30,6 +30,28 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
     }
 });
 
+document.querySelector(".btn-hold").addEventListener("click", function() {
+	if (gamePlaying) {
+		// Add CURRENT score to GLOBAL score
+		scores[activePlayer] += roundScore;
+
+		// Update the UI
+		document.querySelector("#score-" + activePlayer).textContent =
+			scores[activePlayer];
+
+		// Check if player won the game
+		if (scores[activePlayer] >= maxScore) {
+			document.querySelector("#name-" + activePlayer).textContent = "Winner!";
+			document.querySelector(".dice").style.display = "none";
+			document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
+			document.querySelector(".player-" + activePlayer + "-panel").classList.remove("winner");
+			gamePlaying = false;
+		} else {
+			nextPlayer();
+		}
+	}
+});
+
 function init() {
 	scores = [0, 0];
 	roundScore = 0;
